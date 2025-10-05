@@ -1,0 +1,49 @@
+{
+  "b2fPortal": true,
+  "checkCrossProjectImports": true,
+  "projects": [
+      {
+          "projectName": "demo_project",
+          "projectBaseDirPath": "demo_project",
+          "sharedBackendPath": "../../shared_one/backend",
+          "sections": [
+              {
+                  "sectionName": "masterPanel",
+                  "localPath": "masterPanel",
+                  "repository": {
+                      "name": "demo_project_master_panel",
+                      "path": "../../demo_project/master_panel"
+                  },
+                  "isZodCreator": true
+              },
+              {
+                  "sectionName": "adminPanel",
+                  "localPath": "adminPanel",
+                  "repository": {
+                      "name": "demo_project_admin_panel",
+                      "path": "../../demo_project/admin_panel"
+                  },
+                  "isZodCreator": true
+              },
+              {
+                  "sectionName": "staffPanel",
+                  "localPath": "staffPanel",
+                  "repository": {
+                      "name": "demo_project_staff_panel",
+                      "path": "../../demo_project/staff_panel"
+                  },
+                  "isZodCreator": true
+              },
+              {
+                  "sectionName": "webApp",
+                  "localPath": "webApp",
+                  "repository": {
+                      "name": "demo_project_web_app",
+                      "path": "../../demo_project/web_app"
+                  },
+                  "isZodCreator": true
+              }
+          ]
+      }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "name": "@digicroz/node-backend-kit",
+  "version": "1.0.0",
+  "description": "NodeJS Backend Kit - A powerful TypeScript utility for managing backend projects with features like B2F Portal integration, cross-project validation, and Next.js support",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "pbk.schema.json"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "bin": {
+    "nbk": "./dist/bin/pbk.js"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdarshHatkar/pbk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AdarshHatkar/pbk/issues"
+  },
+  "homepage": "https://github.com/AdarshHatkar/pbk#readme",
+  "scripts": {
+    "prepare": "husky install",
+    "dev": "npm run clean && tsc -w",
+    "clean": "rimraf dist && tsc",
+    "release:patch": "npm version patch",
+    "postversion": "git push && git push --tags && npm publish",
+    "build": "npm run clean && tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "backend",
+    "kit",
+    "primexop",
+    "typescript",
+    "node",
+    "b2f-portal",
+    "nextjs",
+    "validation",
+    "configuration",
+    "cross-project",
+    "development-tools",
+    "typescript-utilities",
+    "backend-management",
+    "project-management",
+    "api-development"
+  ],
+  "author": "AdarshHatkar",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "tsc-path-fix": "^1.0.4",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.1"
+  },
+  "dependencies": {
+    "commander": "^13.1.0",
+    "dotenv": "^16.5.0",
+    "husky": "^9.1.7",
+    "ora": "^7.0.1",
+    "rimraf": "^6.0.1",
+    "simple-git": "^3.27.0"
+  }
+}
