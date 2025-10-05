@@ -1,16 +1,24 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "PBK Configuration Schema",
-  "description": "Schema for pbk.config.json configuration file",
+  "title": "NBK Configuration Schema",
+  "description": "Schema for nbk.config.json configuration file",
   "type": "object",
-  "required": ["projects", "b2fPortal", "checkCrossProjectImports"],
+  "required": [
+    "projects",
+    "b2fPortal",
+    "checkCrossProjectImports"
+  ],
   "properties": {
     "projects": {
       "type": "array",
       "description": "Array of projects to manage. Each project can have multiple sections like masterPanel, adminPanel, staffPanel, and webApp.",
       "items": {
         "type": "object",
-        "required": ["projectName", "projectBaseDirPath", "sections"],
+        "required": [
+          "projectName",
+          "projectBaseDirPath",
+          "sections"
+        ],
         "properties": {
           "projectName": {
             "type": "string",
@@ -29,7 +37,12 @@
             "description": "Array of project sections. Each section represents a different part of your application (e.g., masterPanel, adminPanel, staffPanel, webApp)",
             "items": {
               "type": "object",
-              "required": ["sectionName", "repository", "localPath", "isZodCreator"],
+              "required": [
+                "sectionName",
+                "repository",
+                "localPath",
+                "isZodCreator"
+              ],
               "properties": {
                 "sectionName": {
                   "type": "string",
@@ -37,7 +50,10 @@
                 },
                 "repository": {
                   "type": "object",
-                  "required": ["name", "path"],
+                  "required": [
+                    "name",
+                    "path"
+                  ],
                   "properties": {
                     "name": {
                       "type": "string",
@@ -76,4 +92,4 @@
       "description": "Whether to check for cross-project imports. Set to true to enable validation of imports between different project sections."
     }
   }
-} 
+}

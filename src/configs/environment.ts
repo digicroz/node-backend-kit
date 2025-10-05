@@ -1,12 +1,9 @@
-import dotenv from "dotenv";
-dotenv.config();
+import dotenv from "dotenv"
+dotenv.config()
 
 /**
- * Environment configuration for pbk
+ * Environment configuration for nbk
  */
 
 // Flag to determine if the current user is Adarsh (for restricted operations)
-export const isDeveloperAdarsh = process.env.DEVELOPER_NAME === 'adarsh';
-
-
-
+export const isDeveloperAdarsh = process.env.DEVELOPER_NAME === "adarsh"

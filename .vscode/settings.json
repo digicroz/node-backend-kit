@@ -1,11 +1,6 @@
 {
-    "cSpell.words": [
-        "Adarsh",
-        "Hatkar",
-        "primexop"
-    ],
-    "files.associations": {
-        "pbk.config.json": "jsonc"
-    },
-
+  "cSpell.words": ["Adarsh", "Hatkar", "primexop"],
+  "files.associations": {
+    "nbk.config.json": "jsonc"
+  }
 }

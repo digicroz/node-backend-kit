@@ -1,6 +1,6 @@
-# Primexop Backend Kit (PBK) 🚀
+# Primexop Backend Kit (NBK) 🚀
 
-[![npm version](https://badge.fury.io/js/%40primexop%2Fpbk.svg)](https://badge.fury.io/js/%40primexop%2Fpbk)
+[![npm version](https://badge.fury.io/js/%40primexop%2Fnbk.svg)](https://badge.fury.io/js/%40primexop%2Fnbk)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-blue.svg)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D16.0.0-green.svg)](https://nodejs.org/)
@@ -28,13 +28,13 @@ npm install @digicroz/node-backend-kit --save-dev
 ### Basic Usage
 
 ```typescript
-import { pbkInit } from "@digicroz/node-backend-kit"
+import { nbkInit } from "@digicroz/node-backend-kit"
 
-// Initialize with default config path (pbk.config.json in current directory)
-const config = pbkInit()
+// Initialize with default config path (nbk.config.json in current directory)
+const config = nbkInit()
 
 // Or specify a custom config path
-const config = pbkInit({ configPath: "./custom/path/config.json" })
+const config = nbkInit({ configPath: "./custom/path/config.json" })
 ```
 
 ## 📋 Requirements
@@ -44,7 +44,7 @@ const config = pbkInit({ configPath: "./custom/path/config.json" })
 
 ## ⚙️ Configuration
 
-Create a `pbk.config.json` file in your project root:
+Create a `nbk.config.json` file in your project root:
 
 ```json
 {
@@ -107,12 +107,12 @@ This package includes JSON schema validation for your configuration file. To ena
 {
   "json.schemas": [
     {
-      "fileMatch": ["pbk.config.json"],
-      "url": "./node_modules/@digicroz/node-backend-kit/pbk.schema.json"
+      "fileMatch": ["nbk.config.json"],
+      "url": "./node_modules/@digicroz/node-backend-kit/nbk.schema.json"
     }
   ],
   "files.associations": {
-    "pbk.config.json": "jsonc"
+    "nbk.config.json": "jsonc"
   }
 }
 ```
@@ -140,10 +140,10 @@ Sections can be configured with `needNextJsPatch: true` to apply Next.js specifi
 
 ## 🛠️ CLI Commands
 
-PBK comes with several CLI commands to help you manage your projects:
+NBK comes with several CLI commands to help you manage your projects:
 
 ```bash
-# Initialize a pbk.config.json file
+# Initialize a nbk.config.json file
 npx @digicroz/node-backend-kit init
 
 # Fix JSON file formatting
@@ -176,9 +176,9 @@ npx @digicroz/node-backend-kit add-prod-version
 
 ### Development and Production Versioning
 
-PBK provides commands to easily switch between development and production versions:
+NBK provides commands to easily switch between development and production versions:
 
-- `add-dev-version` updates your project to use the local development version from `C:/primexopRepos/pbk`
+- `add-dev-version` updates your project to use the local development version from `C:/primexopRepos/nbk`
 - `add-prod-version` reverts back to using the published npm version (latest by default)
 
 Examples:
@@ -252,4 +252,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📞 Support
 
-For support, please open an issue in the [GitHub repository](https://github.com/AdarshHatkar/pbk/issues).
+For support, please open an issue in the [GitHub repository](https://github.com/AdarshHatkar/nbk/issues).

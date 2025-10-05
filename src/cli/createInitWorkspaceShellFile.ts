@@ -1,17 +1,17 @@
-import fs from 'fs';
-import path from 'path';
-import { clientRootDirPath } from '../utils/path.js';
-import { loadConfig } from '../utils/loadConfig.js';
+import fs from "fs"
+import path from "path"
+import { clientRootDirPath } from "../utils/path.js"
+import { loadConfig } from "../utils/loadConfig.js"
 
 export async function createInitWorkspaceShellFile(): Promise<void> {
   try {
     // Load configuration
-    const configPath = path.join(clientRootDirPath, 'pbk.config.json');
-    const config = loadConfig(configPath);
-    
+    const configPath = path.join(clientRootDirPath, "nbk.config.json")
+    const config = loadConfig(configPath)
+
     if (!config) {
-      console.error('Configuration file not found or invalid');
-      return;
+      console.error("Configuration file not found or invalid")
+      return
     }
 
     // Create shell script content with escaped bash variables using $ prefix
@@ -104,33 +104,35 @@ fi
 
 echo "Editor command: \$EDITOR_CMD"
 
-`;
+`
 
     // Add project paths from configuration
     for (const project of config.projects) {
-      shellScriptContent += `\n# Project: ${project.projectName}\n`;
-      shellScriptContent += `cd ${project.projectBaseDirPath}\n`;
-      shellScriptContent += `\$EDITOR_CMD .\n`;
-      
+      shellScriptContent += `\n# Project: ${project.projectName}\n`
+      shellScriptContent += `cd ${project.projectBaseDirPath}\n`
+      shellScriptContent += `\$EDITOR_CMD .\n`
+
       // Add sections if they have repository paths
       for (const section of project.sections) {
         if (section.repository && section.repository.path) {
-          shellScriptContent += `\ncd ${section.repository.path}\n`;
-          shellScriptContent += `\$EDITOR_CMD .\n`;
+          shellScriptContent += `\ncd ${section.repository.path}\n`
+          shellScriptContent += `\$EDITOR_CMD .\n`
         }
       }
-      
+
       // Return to original directory after each project
-      shellScriptContent += `\ncd \$current_path\n`;
+      shellScriptContent += `\ncd \$current_path\n`
     }
-    
+
     // Save shell script to file
-    const shellScriptPath = path.join(clientRootDirPath, 'initWorkspace.sh');
-    fs.writeFileSync(shellScriptPath, shellScriptContent, { mode: 0o755 }); // Set execute permissions
-    
-    console.log(`Shell script created at: ${shellScriptPath}`);
-    console.log('Remember to make it executable with: chmod +x initWorkspace.sh');
+    const shellScriptPath = path.join(clientRootDirPath, "initWorkspace.sh")
+    fs.writeFileSync(shellScriptPath, shellScriptContent, { mode: 0o755 }) // Set execute permissions
+
+    console.log(`Shell script created at: ${shellScriptPath}`)
+    console.log(
+      "Remember to make it executable with: chmod +x initWorkspace.sh"
+    )
   } catch (error) {
-    console.error('Error creating workspace init shell file:', error);
+    console.error("Error creating workspace init shell file:", error)
   }
-} 
+}

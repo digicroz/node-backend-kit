@@ -7,7 +7,7 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "pbk.schema.json"
+    "nbk.schema.json"
   ],
   "exports": {
     ".": {
@@ -16,19 +16,19 @@
     }
   },
   "bin": {
-    "nbk": "./dist/bin/pbk.js"
+    "nbk": "./dist/bin/nbk.js"
   },
   "engines": {
     "node": ">=16.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AdarshHatkar/pbk.git"
+    "url": "git+https://github.com/AdarshHatkar/nbk.git"
   },
   "bugs": {
-    "url": "https://github.com/AdarshHatkar/pbk/issues"
+    "url": "https://github.com/AdarshHatkar/nbk/issues"
   },
-  "homepage": "https://github.com/AdarshHatkar/pbk#readme",
+  "homepage": "https://github.com/AdarshHatkar/nbk#readme",
   "scripts": {
     "prepare": "husky install",
     "dev": "npm run clean && tsc -w",

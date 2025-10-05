@@ -15,13 +15,13 @@ import '../utils/progress.js';
 import packageJson from '../../package.json' with { type: "json" };
 
 program
-  .name('pbk')
+  .name('nbk')
   .version(packageJson.version)
   .description('PrimeXOP Backend Kit - CLI Tool');
 
 program
   .command('init')
-  .description('Initialize an empty pbk.config.json file in the project root')
+  .description('Initialize an empty nbk.config.json file in the project root')
   .action(async () => {
     await initConfig();
   });
@@ -57,7 +57,7 @@ program
 program
   .command('fix-config-file')
   .description('Fix JSON files by adding double quotes to keys and removing trailing commas')
-  .option('-p, --path <path>', 'Path to the JSON file to fix (defaults to pbk.config.json)')
+  .option('-p, --path <path>', 'Path to the JSON file to fix (defaults to nbk.config.json)')
   .action(async (options) => {
     await fixConfigFile(options.path);
   });

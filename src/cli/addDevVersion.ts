@@ -22,7 +22,7 @@ export async function addDevVersion(targetDir?: string): Promise<void> {
     const packageJson = JSON.parse(packageJsonContent)
 
     // Update or add the dependency
-    const pbkPath = "file:C:/primexopRepos/pbk"
+    const nbkPath = "file:C:/primexopRepos/nbk"
     const originalVersion =
       packageJson.dependencies?.["@digicroz/node-backend-kit"] ||
       packageJson.devDependencies?.["@digicroz/node-backend-kit"]
@@ -42,13 +42,13 @@ export async function addDevVersion(targetDir?: string): Promise<void> {
     }
 
     // Update the dependency
-    packageJson[dependencyType]["@digicroz/node-backend-kit"] = pbkPath
+    packageJson[dependencyType]["@digicroz/node-backend-kit"] = nbkPath
 
     // Save the updated package.json
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 
     console.log(
-      `Updated @digicroz/node-backend-kit to use local version: ${pbkPath}`
+      `Updated @digicroz/node-backend-kit to use local version: ${nbkPath}`
     )
     if (originalVersion) {
       console.log(`Original version was: ${originalVersion}`)
