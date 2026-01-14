@@ -1,6 +1,6 @@
 {
   "name": "@digicroz/node-backend-kit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NodeJS Backend Kit - A powerful TypeScript utility for managing backend projects with features like B2F Portal integration, cross-project validation, and Next.js support",
   "type": "module",
   "main": "dist/index.js",
