@@ -1,7 +1,7 @@
-import path from "path"
-import { TNbkConfig, TNbkProject, TNbkProjectSection } from "../types.js"
-import fs from "fs"
-import { stripComments } from "./jsonFile.js"
+import path from "path";
+import { TNbkConfig, TNbkProject, TNbkProjectSection } from "../types.js";
+import fs from "fs";
+import { stripComments } from "./jsonFile.js";
 
 /**
  * Creates a visually distinct, colorful error message for config file not found errors
@@ -9,15 +9,15 @@ import { stripComments } from "./jsonFile.js"
  * @returns Formatted error message string
  */
 function createConfigNotFoundErrorMessage(configPath: string): string {
-  const separator = "=".repeat(80)
-  const title = "CONFIG FILE NOT FOUND ERROR"
+  const separator = "=".repeat(80);
+  const title = "CONFIG FILE NOT FOUND ERROR";
 
   // Color codes for terminal
-  const red = "\x1b[31m"
-  const yellow = "\x1b[33m"
-  const cyan = "\x1b[36m"
-  const reset = "\x1b[0m"
-  const bold = "\x1b[1m"
+  const red = "\x1b[31m";
+  const yellow = "\x1b[33m";
+  const cyan = "\x1b[36m";
+  const reset = "\x1b[0m";
+  const bold = "\x1b[1m";
 
   // Create suggested config example
   const configExample = JSON.stringify(
@@ -44,7 +44,7 @@ function createConfigNotFoundErrorMessage(configPath: string): string {
     },
     null,
     2
-  )
+  );
 
   return `
 ${red}${separator}${reset}
@@ -62,7 +62,7 @@ ${yellow}To specify a different config location, provide the path when calling n
 ${cyan}nbkInit({ configPath: './path/to/your/config.json' })${reset}
 
 ${red}${separator}${reset}
-`
+`;
 }
 
 /**
@@ -71,15 +71,15 @@ ${red}${separator}${reset}
  * @returns Formatted error message string
  */
 function createValidationErrorMessage(message: string): string {
-  const separator = "=".repeat(80)
-  const title = "CONFIG VALIDATION ERROR"
+  const separator = "=".repeat(80);
+  const title = "CONFIG VALIDATION ERROR";
 
   // Color codes for terminal
-  const red = "\x1b[31m"
-  const yellow = "\x1b[33m"
-  const green = "\x1b[32m"
-  const reset = "\x1b[0m"
-  const bold = "\x1b[1m"
+  const red = "\x1b[31m";
+  const yellow = "\x1b[33m";
+  const green = "\x1b[32m";
+  const reset = "\x1b[0m";
+  const bold = "\x1b[1m";
 
   return `
 ${red}${separator}${reset}
@@ -91,7 +91,7 @@ ${yellow}${message}${reset}
 ${green}Please review your configuration file and fix the validation issue.${reset}
 
 ${red}${separator}${reset}
-`
+`;
 }
 
 /**
@@ -106,41 +106,41 @@ export function loadConfig(
   try {
     // Check if file exists
     if (!fs.existsSync(configPath)) {
-      const errorMessage = createConfigNotFoundErrorMessage(configPath)
-      console.error(errorMessage)
-      throw new Error(`Configuration file not found: ${configPath}`)
+      const errorMessage = createConfigNotFoundErrorMessage(configPath);
+      console.error(errorMessage);
+      throw new Error(`Configuration file not found: ${configPath}`);
     }
 
     // Read file and strip comments
-    const configString = fs.readFileSync(configPath, "utf8")
-    const strippedConfig = stripComments(configString)
+    const configString = fs.readFileSync(configPath, "utf8");
+    const strippedConfig = stripComments(configString);
 
     // Parse JSON file
-    const config = JSON.parse(strippedConfig) as TNbkConfig
+    const config = JSON.parse(strippedConfig) as TNbkConfig;
 
     // Validate the entire config structure
     try {
-      validateConfig(config)
+      validateConfig(config);
     } catch (validationError) {
       if (validationError instanceof Error) {
         const errorMessage = createValidationErrorMessage(
           validationError.message
-        )
-        console.error(errorMessage)
+        );
+        console.error(errorMessage);
       }
-      throw validationError
+      throw validationError;
     }
 
-    return config
+    return config;
   } catch (error) {
     if (error instanceof SyntaxError) {
       const errorMessage = createValidationErrorMessage(
         `Invalid JSON in configuration file: ${error.message}`
-      )
-      console.error(errorMessage)
-      throw new Error(`Invalid JSON in configuration file: ${error.message}`)
+      );
+      console.error(errorMessage);
+      throw new Error(`Invalid JSON in configuration file: ${error.message}`);
     }
-    throw error
+    throw error;
   }
 }
 
@@ -152,24 +152,24 @@ export function loadConfig(
 function validateConfig(config: any): asserts config is TNbkConfig {
   // Check if config has projects array
   if (!config || !Array.isArray(config.projects)) {
-    throw new Error('Configuration must contain a "projects" array')
+    throw new Error('Configuration must contain a "projects" array');
   }
 
   // Check for b2fPortal and checkCrossProjectImports fields
   if (typeof config.b2fPortal !== "boolean") {
-    throw new Error('Configuration must contain a "b2fPortal" boolean field')
+    throw new Error('Configuration must contain a "b2fPortal" boolean field');
   }
 
   if (typeof config.checkCrossProjectImports !== "boolean") {
     throw new Error(
       'Configuration must contain a "checkCrossProjectImports" boolean field'
-    )
+    );
   }
 
   // Validate each project
   for (let i = 0; i < config.projects.length; i++) {
-    const project = config.projects[i]
-    validateProject(project, i)
+    const project = config.projects[i];
+    validateProject(project, i);
   }
 }
 
@@ -184,24 +184,24 @@ function validateProject(
 ): asserts project is TNbkProject {
   // Required fields
   if (!project.projectName) {
-    throw new Error(`Project at index ${index} is missing "projectName"`)
+    throw new Error(`Project at index ${index} is missing "projectName"`);
   }
 
   if (!project.projectBaseDirPath) {
     throw new Error(
       `Project "${project.projectName}" is missing "projectBaseDirPath"`
-    )
+    );
   }
 
   if (!Array.isArray(project.sections)) {
     throw new Error(
       `Project "${project.projectName}" must contain a "sections" array`
-    )
+    );
   }
 
   // Validate each section
   for (let j = 0; j < project.sections.length; j++) {
-    validateSection(project.sections[j], project.projectName, j)
+    validateSection(project.sections[j], project.projectName, j);
   }
 }
 
@@ -220,44 +220,53 @@ function validateSection(
   if (!section.sectionName) {
     throw new Error(
       `Section at index ${index} in project "${projectName}" is missing "sectionName"`
-    )
+    );
   }
 
   if (!section.repository) {
     throw new Error(
       `Section "${section.sectionName}" in project "${projectName}" is missing "repository"`
-    )
+    );
   }
 
   if (!section.repository.name) {
     throw new Error(
       `Section "${section.sectionName}" in project "${projectName}" has repository missing "name"`
-    )
+    );
   }
 
   if (!section.repository.path) {
     throw new Error(
       `Section "${section.sectionName}" in project "${projectName}" has repository missing "path"`
-    )
+    );
+  }
+
+  // Optional fields with defaults
+  if (!section.repository.dirPath) {
+    section.repository.dirPath = "b2fPortal";
+  } else if (typeof section.repository.dirPath !== "string") {
+    throw new Error(
+      `Section "${section.sectionName}" in project "${projectName}" has invalid "dirPath" in repository. Must be a string.`
+    );
   }
 
   if (!section.localPath) {
     throw new Error(
       `Section "${section.sectionName}" in project "${projectName}" is missing "localPath"`
-    )
+    );
   }
 
   if (section.isZodCreator === undefined) {
     throw new Error(
       `Section "${section.sectionName}" in project "${projectName}" is missing "isZodCreator"`
-    )
+    );
   }
 
   // Type checks
   if (typeof section.isZodCreator !== "boolean") {
     throw new Error(
       `Section "${section.sectionName}" in project "${projectName}": "isZodCreator" must be a boolean`
-    )
+    );
   }
 
   if (
@@ -266,6 +275,6 @@ function validateSection(
   ) {
     throw new Error(
       `Section "${section.sectionName}" in project "${projectName}": "needNextJsPatch" must be a boolean if provided`
-    )
+    );
   }
 }
