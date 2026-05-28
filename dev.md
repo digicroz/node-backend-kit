@@ -1,1 +1,1 @@
-"@digicroz/node-backend-kit": "file:C:/DigiCrozRepos/npm-packages/node-backend-kit",
+"@digicroz/node-backend-kit": "file:C:/digicroz-repos/npm-packages/node-backend-kit",
