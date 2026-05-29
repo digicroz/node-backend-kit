@@ -65,8 +65,9 @@ program
 program
   .command('transfer-2-shared')
   .description('Transfer project files to shared backend repositories')
-  .action(async () => {
-    await transfer2Shared();
+  .argument('[branch]', 'Target branch to use in the shared backend repository (defaults to main)')
+  .action(async (branch) => {
+    await transfer2Shared(branch);
   });
 
 program

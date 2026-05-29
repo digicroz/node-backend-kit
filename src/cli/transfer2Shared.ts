@@ -15,13 +15,14 @@ import {
   withProgress,
 } from "../utils/progress.js"
 
-export const transfer2Shared = async () => {
+export const transfer2Shared = async (targetBranch: string = "main") => {
   // Load projects from the configuration file
   const config = loadConfig()
 
   // Export projects for use in CLI tools
   let b2fPortalProjects: TNbkProject[] = config.projects
   console.log("------------transfer2Shared Started-------------")
+  console.log(`Target shared backend branch: ${targetBranch}`)
 
   try {
     const mainSpinner = startProgress("Checking main repository status")
@@ -133,23 +134,40 @@ export const transfer2Shared = async () => {
           let sharedBackendGitStatus = await sharedBackendGit.status()
 
           // Save the current branch name
-          const currentBranch = sharedBackendGitStatus.current
+          const originalSharedBranch = sharedBackendGitStatus.current || ""
 
-          // console.log(currentBranch);
+          async function checkoutTargetBranch() {
+            if (originalSharedBranch === targetBranch) {
+              return
+            }
 
-          if (currentBranch !== "main") {
-            failProgress(
-              projectSpinner,
-              `Shared backend branch is ${currentBranch}, but it should be main.`
-            )
-            projectProgress.incrementFailed(`Failed: ${project.projectName}`)
-            throw new Error(
-              ` Shared backend branch is ${currentBranch}, but it should be main.`
-            )
+            await sharedBackendGit.fetch()
+            const branchSummary = await sharedBackendGit.branch(["-a"])
+            const localBranches = branchSummary.all
+            const remoteBranchName = `remotes/origin/${targetBranch}`
+
+            if (localBranches.includes(targetBranch)) {
+              await sharedBackendGit.checkout(targetBranch)
+            } else if (localBranches.includes(remoteBranchName)) {
+              await sharedBackendGit.checkoutBranch(targetBranch, `origin/${targetBranch}`)
+            } else {
+              failProgress(
+                projectSpinner,
+                `Target branch ${targetBranch} does not exist in shared backend repository.`
+              )
+              projectProgress.incrementFailed(`Failed: ${project.projectName}`)
+              throw new Error(
+                `Target branch ${targetBranch} does not exist in shared backend repository.`
+              )
+            }
           }
 
+          await checkoutTargetBranch()
+
+          const branchSwitched = originalSharedBranch !== targetBranch
+
           projectSpinner.text = `Pulling latest changes from shared backend repository for project: ${project.projectName}`
-          await sharedBackendGit.pull()
+          await sharedBackendGit.pull("origin", targetBranch)
 
           const sharedProjectSrcPath = join(
             sharedBackendPath,
@@ -176,6 +194,10 @@ export const transfer2Shared = async () => {
           )
 
           if (!sharedBackendChanges) {
+            if (branchSwitched && originalSharedBranch) {
+              await sharedBackendGit.checkout(originalSharedBranch)
+            }
+
             successProgress(
               projectSpinner,
               `No changes detected in the sharedBackend directory for project: ${project.projectName}`
@@ -230,9 +252,13 @@ export const transfer2Shared = async () => {
           const commitMessage = `${currentDate} transfer2Shared from ${repositoryPackageJson.name}`
           await sharedBackendGit.commit(commitMessage)
 
-          // Push the commit to the main branch
+          // Push the commit to the target branch
           projectSpinner.text = `Pushing changes to shared backend repository for project: ${project.projectName}`
-          await sharedBackendGit.push("origin", "main")
+          await sharedBackendGit.push("origin", targetBranch)
+
+          if (originalSharedBranch && originalSharedBranch !== targetBranch) {
+            await sharedBackendGit.checkout(originalSharedBranch)
+          }
 
           successProgress(
             projectSpinner,
